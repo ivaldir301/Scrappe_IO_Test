@@ -1,5 +1,7 @@
+from utils.logger import Logger
+
 def main():
     if __name__ == "__main__":
-        print("start of the project")
+        Logger.info_logging("Project is being runned.")
 
 main()
