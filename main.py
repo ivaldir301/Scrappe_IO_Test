@@ -1,7 +1,10 @@
 from utils.logger import Logger
+from scrapper.scrapper_io.main import WebScrapperIO
+import asyncio
 
-def main():
-    if __name__ == "__main__":
-        Logger.info_logging("Project is being runned.")
+async def main():
+    Logger.info_logging("Project is being runned.")
+    print(await WebScrapperIO.scrappe())
 
-main()
+if __name__ == "__main__":
+    asyncio.run(main())
