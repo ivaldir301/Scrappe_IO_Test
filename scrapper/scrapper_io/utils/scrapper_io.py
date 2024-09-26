@@ -4,6 +4,7 @@ from selectolax.parser import HTMLParser
 from scrapper.models.laptop import Laptop
 import os
 from dotenv import load_dotenv
+import re
 
 load_dotenv()
 
@@ -68,13 +69,17 @@ def parse_data_from_url(data: str, list: Laptop) -> bool:
             except Exception as e:
                 Logger.warning_logging(f"Coudn't find the reviews element: {e}")
                 laptop_data.number_of_reviews = None
-
+    
             list.append(laptop_data.to_dict())
     except Exception as e:
         Logger.error_logging(f"There was an issue pulling data from website: {e}")
         return list, False
     
-    return list
+    return clean_data(list)
+
+def clean_data(data):
+    cleaned_data = (re.sub(r',\s*,', ',', str(data)))
+    return re.sub(r'\\\\"', '"', cleaned_data)
     
 def sort_data_by_price():
     pass
