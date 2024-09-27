@@ -70,16 +70,35 @@ def parse_data_from_url(data: str, list: Laptop) -> bool:
                 Logger.warning_logging(f"Coudn't find the reviews element: {e}")
                 laptop_data.number_of_reviews = None
     
+            print("element type here: ", type(laptop_data.to_dict()))
             list.append(laptop_data.to_dict())
     except Exception as e:
         Logger.error_logging(f"There was an issue pulling data from website: {e}")
         return list, False
     
+    print("before return: ", type(list))
+    print("value that will be returned: ", type(clean_data(list)))
     return clean_data(list)
 
 def clean_data(data):
-    cleaned_data = (re.sub(r',\s*,', ',', str(data)))
-    return re.sub(r'\\\\"', '"', cleaned_data)
+    cleaned_data = []
+    for item in data:
+        cleaned_item = {}
+        for key, value in item.items():
+            if isinstance(value, str):
+                value = re.sub(r',\s*,', ',', value)
+                value = re.sub(r'\\\\"', '"', value)
+            cleaned_item[key] = value
+        cleaned_data.append(cleaned_item)
+    return cleaned_data
+
     
-def sort_data_by_price():
-    pass
+def sort_data_by_price(laptop_list):
+    laptops = []
+    for item in laptop_list:
+        item['price'] = float(item['price'].replace('$', '').replace(',', ''))
+        laptops.append(item)
+
+    sorted_laptops = sorted(laptops, key=lambda x: x['price'])
+    return sorted_laptops
+   
