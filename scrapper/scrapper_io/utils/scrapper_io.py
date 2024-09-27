@@ -1,3 +1,4 @@
+from tenacity import retry, wait_exponential, stop_after_attempt
 import httpx
 from utils.logger import Logger
 from selectolax.parser import HTMLParser    
@@ -14,7 +15,7 @@ headers = {
      "User-Agent": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:130.0) Gecko/20100101 Firefox/130.0"
 }
 
-
+@retry(wait=wait_exponential(min=1, max=10), stop=stop_after_attempt(3))
 async def get_url_html_data(target_url: str) -> str:
     Logger.info_logging(f"going to: {target_url}")
 
@@ -72,14 +73,11 @@ def parse_data_from_url(data: str, list: Laptop) -> bool:
                 Logger.warning_logging(f"Coudn't find the reviews element: {e}")
                 laptop_data.number_of_reviews = None
     
-            print("element type here: ", type(laptop_data.to_dict()))
             list.append(laptop_data.to_dict())
     except Exception as e:
         Logger.error_logging(f"There was an issue pulling data from website: {e}")
         return list, False
     
-    print("before return: ", type(list))
-    print("value that will be returned: ", type(clean_data(list)))
     return clean_data(list)
 
 def clean_data(data):
