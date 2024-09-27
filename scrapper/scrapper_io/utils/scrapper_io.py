@@ -5,6 +5,7 @@ from scrapper.models.laptop import Laptop
 import os
 from dotenv import load_dotenv
 import re
+import asyncio
 
 load_dotenv()
 
@@ -13,11 +14,12 @@ headers = {
      "User-Agent": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:130.0) Gecko/20100101 Firefox/130.0"
 }
 
+
 async def get_url_html_data(target_url: str) -> str:
     Logger.info_logging(f"going to: {target_url}")
 
-    async with httpx.AsyncClient():
-        response = httpx.get(target_url, headers=headers)
+    async with httpx.AsyncClient() as client:
+        response = await client.get(target_url, headers=headers)
         if response.status_code == 200:
             return response.text
     Logger.error_logging("was not possible no get website html data")

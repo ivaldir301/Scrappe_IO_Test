@@ -19,28 +19,28 @@ class Logger:
         tests/test_logger,py
     """
     @staticmethod
-    def info_logging(log_message: str):
+    async def info_logging(log_message: str):
         if log_message is not None and log_message != "":
-            logger.add(LOG_FILE, format="{time:YYYY-MM-DD at HH:mm:ss} | {level} | {function} | {message}", level="INFO")
-            logger.add(sys.stderr, format="{time:YYYY-MM-DD at HH:mm:ss} | {level} | {function} | {message}", level="INFO")    
-            logger.info(log_message)
+            await logger.add(LOG_FILE, format="{time:YYYY-MM-DD at HH:mm:ss} | {level} | {function} | {message}", level="INFO")
+            await logger.add(sys.stderr, format="{time:YYYY-MM-DD at HH:mm:ss} | {level} | {function} | {message}", level="INFO")    
+            await logger.info(log_message)
 
         return ERROR_MESSAGE
     
     @staticmethod
-    def warning_logging(log_message: str):
+    async def warning_logging(log_message: str):
         if log_message is not None and log_message != "":
-            logger.add(LOG_FILE, format="{time:YYYY-MM-DD at HH:mm:ss} | {level} | {function} | {message}", level="WARNING")
-            logger.add(sys.stderr, format="{time:YYYY-MM-DD at HH:mm:ss} | {level} | {function} | {message}", level="WARNING")    
-            logger.warning(log_message)
+            await logger.add(LOG_FILE, format="{time:YYYY-MM-DD at HH:mm:ss} | {level} | {function} | {message}", level="WARNING")
+            await logger.add(sys.stderr, format="{time:YYYY-MM-DD at HH:mm:ss} | {level} | {function} | {message}", level="WARNING")    
+            await logger.warning(log_message)
 
         return ERROR_MESSAGE
     
     @staticmethod
-    def error_logging(log_message: str):
+    async def error_logging(log_message: str):
         if log_message is not None and log_message != "":
-            logger.add(LOG_FILE, format="{time:YYYY-MM-DD at HH:mm:ss} | {level} | {function} | {message}", level="ERROR")
-            logger.add(sys.stderr, format="{time:YYYY-MM-DD at HH:mm:ss} | {level} | {function} | {message}", level="ERROR")    
-            logger.error(log_message)
+            await logger.add(LOG_FILE, format="{time:YYYY-MM-DD at HH:mm:ss} | {level} | {function} | {message}", level="ERROR")
+            await logger.add(sys.stderr, format="{time:YYYY-MM-DD at HH:mm:ss} | {level} | {function} | {message}", level="ERROR")    
+            await logger.error(log_message)
 
         return ERROR_MESSAGE
