@@ -1,6 +1,6 @@
 from fastapi import FastAPI, HTTPException
-from scrapper.scrapper_io.main import WebScrapperIO
 from fastapi.middleware.cors import CORSMiddleware
+from scrapper.scrapper_io.main import WebScrapperIO
 
 app = FastAPI()
 
