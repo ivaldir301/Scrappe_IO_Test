@@ -11,43 +11,42 @@ jobs:
 
     steps:
     - name: Checkout code
-    uses: actions/checkout@v3
+      uses: actions/checkout@v3
 
-    - name: Set up python
-    uses: actions/setup-python@v4
-    with:
-      python-version:  '3.12'
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.12'
 
     - name: Install project dependencies
-    run: | 
-      python -m pip install --upgrade pip
-      pip install -r --no-cached-dir requirements.txt
+      run: | 
+        python -m pip install --upgrade pip
+        pip install --no-cache-dir -r requirements.txt
 
     - name: Run tests
-     run: |
-       pytest -v
+      run: |
+        pytest -v
 
-build:
-  runs-on: ubuntu-latest
-  needs: test
+  build:
+    runs-on: ubuntu-latest
+    needs: test
 
-  steps: 
-  - name: Checkout code
-  - uses: actions/checkout@v3
+    steps: 
+    - name: Checkout code
+      uses: actions/checkout@v3
 
-  name: Set-up python
-  uses: actions/setup-python@v4
-  with: 
-    python-version: '3.12'
+    - name: Set-up Python
+      uses: actions/setup-python@v4
+      with: 
+        python-version: '3.12'
 
-  - name: Build docker image
-   run: | 
-     docker build -t laptop-scrapper .
+    - name: Build Docker image
+      run: | 
+        docker build -t laptop-scrapper .
 
-  - name: Run the container
-    run: |
-      docker run -d -p 8000:8000 laptop-scrapper
+    - name: Run the container
+      run: |
+        docker run -d -p 8000:8000 laptop-scrapper
 
-  - name: Check app health
-    run: curl -f http://localhost:8000 || exit 1
-
+    - name: Check app health
+      run: curl -f http://localhost:8000 || exit 1
