@@ -49,4 +49,4 @@ jobs:
         docker run -d -p 8000:8000 laptop-scrapper
 
     - name: Check app health
-      run: curl -f http://localhost:8000 || exit 1
+      run: curl -f http://localhost:8009 || exit 1
