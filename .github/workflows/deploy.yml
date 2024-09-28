@@ -49,6 +49,13 @@ jobs:
       run: |
         docker run -d -p 8009:8009 laptop-scrapper
 
+    - name: Wait for app to start
+      run: sleep 10  
+
     - name: Check app health
       run: curl -f http://localhost:8009 || exit 1
     continue-on-error: true
+
+    - name: Show logs
+      run: docker logs $(docker ps -q --filter "ancestor=laptop-scrapper")
+
