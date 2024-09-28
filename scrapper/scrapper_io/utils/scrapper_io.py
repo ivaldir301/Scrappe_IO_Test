@@ -87,7 +87,8 @@ def clean_data(data):
         for key, value in item.items():
             if isinstance(value, str):
                 value = re.sub(r',\s*,', ',', value)
-                value = re.sub(r'\\\\"', '"', value)
+                value = re.sub(r'\\\\\\"', '"', value)
+                value = value.replace('\"', "inch")
             cleaned_item[key] = value
         cleaned_data.append(cleaned_item)
     return cleaned_data

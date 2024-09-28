@@ -18,6 +18,7 @@ class Logger:
     tests:
         tests/test_logger,py
     """
+
     @staticmethod
     async def info_logging(log_message: str):
         if log_message is not None and log_message != "":
