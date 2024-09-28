@@ -50,10 +50,10 @@ jobs:
           docker run -d -p 8009:8009 laptop-scrapper
 
       - name: Wait for app to start
-        run: sleep 10  
+        run: sleep 20
 
       - name: Check app health
-        run: curl -f http://localhost:8009 || exit 1
+        run: curl -f http://localhost:8009/test || exit 1
         continue-on-error: true  
       
       - name: Show logs
