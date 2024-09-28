@@ -54,4 +54,7 @@ jobs:
 
       - name: Check app health
         run: curl -f http://localhost:8009 || exit 1
-        continue-on-error: true  # This allo
+        continue-on-error: true  
+      
+      - name: Show logs
+        run: docker logs $(docker ps -q --filter "ancestor=laptop-scrapper")
